@@ -1,0 +1,367 @@
+EESchema Schematic File Version 2  date Thu 08 Mar 2012 23:13:06 HKT
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:4cpower-cache
+EELAYER 25  0
+EELAYER END
+$Descr A4 11700 8267
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "8 mar 2012"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L CONN_1 P29
+U 1 1 4F58CC77
+P 4500 1700
+F 0 "P29" H 4580 1700 40  0000 L CNN
+F 1 "-" H 4500 1755 30  0001 C CNN
+	1    4500 1700
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P30
+U 1 1 4F58CC76
+P 4500 2000
+F 0 "P30" H 4580 2000 40  0000 L CNN
+F 1 "-" H 4500 2055 30  0001 C CNN
+	1    4500 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P32
+U 1 1 4F58CC75
+P 4500 2600
+F 0 "P32" H 4580 2600 40  0000 L CNN
+F 1 "-" H 4500 2655 30  0001 C CNN
+	1    4500 2600
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P31
+U 1 1 4F58CC74
+P 4500 2300
+F 0 "P31" H 4580 2300 40  0000 L CNN
+F 1 "-" H 4500 2355 30  0001 C CNN
+	1    4500 2300
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P27
+U 1 1 4F58C8CB
+P 4100 2300
+F 0 "P27" H 4180 2300 40  0000 L CNN
+F 1 "-" H 4100 2355 30  0001 C CNN
+	1    4100 2300
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P28
+U 1 1 4F58C8CA
+P 4100 2600
+F 0 "P28" H 4180 2600 40  0000 L CNN
+F 1 "-" H 4100 2655 30  0001 C CNN
+	1    4100 2600
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P26
+U 1 1 4F58C8C9
+P 4100 2000
+F 0 "P26" H 4180 2000 40  0000 L CNN
+F 1 "-" H 4100 2055 30  0001 C CNN
+	1    4100 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P25
+U 1 1 4F58C8C8
+P 4100 1700
+F 0 "P25" H 4180 1700 40  0000 L CNN
+F 1 "-" H 4100 1755 30  0001 C CNN
+	1    4100 1700
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P13
+U 1 1 4F583B59
+P 3100 1700
+F 0 "P13" H 3180 1700 40  0000 L CNN
+F 1 "-" H 3100 1755 30  0001 C CNN
+	1    3100 1700
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P17
+U 1 1 4F583B58
+P 3500 1700
+F 0 "P17" H 3580 1700 40  0000 L CNN
+F 1 "-" H 3500 1755 30  0001 C CNN
+	1    3500 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P18
+U 1 1 4F583B57
+P 3500 1850
+F 0 "P18" H 3580 1850 40  0000 L CNN
+F 1 "-" H 3500 1905 30  0001 C CNN
+	1    3500 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P19
+U 1 1 4F583B56
+P 3500 2000
+F 0 "P19" H 3580 2000 40  0000 L CNN
+F 1 "-" H 3500 2055 30  0001 C CNN
+	1    3500 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P14
+U 1 1 4F583B55
+P 3100 2000
+F 0 "P14" H 3180 2000 40  0000 L CNN
+F 1 "-" H 3100 2055 30  0001 C CNN
+	1    3100 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P16
+U 1 1 4F583B54
+P 3100 2600
+F 0 "P16" H 3180 2600 40  0000 L CNN
+F 1 "-" H 3100 2655 30  0001 C CNN
+	1    3100 2600
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P23
+U 1 1 4F583B53
+P 3500 2600
+F 0 "P23" H 3580 2600 40  0000 L CNN
+F 1 "-" H 3500 2655 30  0001 C CNN
+	1    3500 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P24
+U 1 1 4F583B52
+P 3500 2750
+F 0 "P24" H 3580 2750 40  0000 L CNN
+F 1 "-" H 3500 2805 30  0001 C CNN
+	1    3500 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P22
+U 1 1 4F583B51
+P 3500 2450
+F 0 "P22" H 3580 2450 40  0000 L CNN
+F 1 "-" H 3500 2505 30  0001 C CNN
+	1    3500 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P21
+U 1 1 4F583B50
+P 3500 2300
+F 0 "P21" H 3580 2300 40  0000 L CNN
+F 1 "-" H 3500 2355 30  0001 C CNN
+	1    3500 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P15
+U 1 1 4F583B4F
+P 3100 2300
+F 0 "P15" H 3180 2300 40  0000 L CNN
+F 1 "-" H 3100 2355 30  0001 C CNN
+	1    3100 2300
+	-1   0    0    1   
+$EndComp
+Connection ~ 3350 2150
+Connection ~ 3350 2300
+Wire Wire Line
+	3350 2300 3250 2300
+Wire Wire Line
+	3350 2600 3250 2600
+Wire Wire Line
+	3350 2000 3250 2000
+Wire Wire Line
+	3350 1700 3250 1700
+Connection ~ 3350 2000
+Connection ~ 3350 1850
+Wire Wire Line
+	3350 2750 3350 1700
+Connection ~ 3350 2600
+Connection ~ 3350 2450
+$Comp
+L CONN_1 P20
+U 1 1 4F583B4E
+P 3500 2150
+F 0 "P20" H 3580 2150 40  0000 L CNN
+F 1 "-" H 3500 2205 30  0001 C CNN
+	1    3500 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P8
+U 1 1 4F582687
+P 2700 2150
+F 0 "P8" H 2780 2150 40  0000 L CNN
+F 1 "+" H 2700 2205 30  0001 C CNN
+	1    2700 2150
+	1    0    0    -1  
+$EndComp
+Connection ~ 2550 2450
+Connection ~ 2550 2600
+Wire Wire Line
+	2550 2750 2550 1700
+Connection ~ 2550 1850
+Connection ~ 2550 2000
+Wire Wire Line
+	2550 1700 2450 1700
+Wire Wire Line
+	2550 2000 2450 2000
+Wire Wire Line
+	2550 2600 2450 2600
+Wire Wire Line
+	2550 2300 2450 2300
+Connection ~ 2550 2300
+Connection ~ 2550 2150
+$Comp
+L CONN_1 P3
+U 1 1 4F5826A0
+P 2300 2300
+F 0 "P3" H 2380 2300 40  0000 L CNN
+F 1 "+" H 2300 2355 30  0001 C CNN
+	1    2300 2300
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P9
+U 1 1 4F58269E
+P 2700 2300
+F 0 "P9" H 2780 2300 40  0000 L CNN
+F 1 "+" H 2700 2355 30  0001 C CNN
+	1    2700 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P10
+U 1 1 4F58269D
+P 2700 2450
+F 0 "P10" H 2780 2450 40  0000 L CNN
+F 1 "+" H 2700 2505 30  0001 C CNN
+	1    2700 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P12
+U 1 1 4F58269C
+P 2700 2750
+F 0 "P12" H 2780 2750 40  0000 L CNN
+F 1 "+" H 2700 2805 30  0001 C CNN
+	1    2700 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P11
+U 1 1 4F58269A
+P 2700 2600
+F 0 "P11" H 2780 2600 40  0000 L CNN
+F 1 "+" H 2700 2655 30  0001 C CNN
+	1    2700 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P4
+U 1 1 4F582699
+P 2300 2600
+F 0 "P4" H 2380 2600 40  0000 L CNN
+F 1 "+" H 2300 2655 30  0001 C CNN
+	1    2300 2600
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P2
+U 1 1 4F58268A
+P 2300 2000
+F 0 "P2" H 2380 2000 40  0000 L CNN
+F 1 "+" H 2300 2055 30  0001 C CNN
+	1    2300 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_1 P7
+U 1 1 4F582688
+P 2700 2000
+F 0 "P7" H 2780 2000 40  0000 L CNN
+F 1 "+" H 2700 2055 30  0001 C CNN
+	1    2700 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P6
+U 1 1 4F582664
+P 2700 1850
+F 0 "P6" H 2780 1850 40  0000 L CNN
+F 1 "+" H 2700 1905 30  0001 C CNN
+	1    2700 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P5
+U 1 1 4F582646
+P 2700 1700
+F 0 "P5" H 2780 1700 40  0000 L CNN
+F 1 "+" H 2700 1755 30  0001 C CNN
+	1    2700 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P1
+U 1 1 4F58263D
+P 2300 1700
+F 0 "P1" H 2380 1700 40  0000 L CNN
+F 1 "+" H 2300 1755 30  0001 C CNN
+	1    2300 1700
+	-1   0    0    1   
+$EndComp
+$EndSCHEMATC

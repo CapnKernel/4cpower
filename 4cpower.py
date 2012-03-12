@@ -1,0 +1,153 @@
+#! /usr/bin/python
+
+import math, cmath
+
+# All dimensions in millimetres.
+A = 27.6
+B = math.sqrt(2*A*A)
+
+deg45 = math.pi / 4
+
+page_offset = complex(6 * 25.4, 4 * 25.4)
+no_offset = complex(0, 0)
+
+def point_to_kicad(p, origin=page_offset):
+
+    """ Convert a point in mm to a string in thousandths of an inch """
+    offset_p = p + origin
+    return "%d %d" % (int((offset_p.real / 25.4) * 10000), -int((offset_p.imag / 25.4) * 10000))
+
+def emit_border(f):
+    # Start from the 3 o'clock position
+    prev = cmath.rect(B, 0)
+    # Calculate the position of the next point
+    odd_point = complex(A, -A + B)
+    odd_len = abs(odd_point)
+    
+    # print "odd_point=", odd_point, "odd_len=", odd_len
+    # assert 1 == 0
+    for p in xrange(1, 17):
+        if p % 2 == 0:
+            next = cmath.rect(B, p * deg45 / 2)
+        else:
+            next = cmath.rect(odd_len, p * deg45 / 2)
+        # print "p=", p, "prev=", prev, "next=", next
+        # print "p=", p, "prev=", point_to_kicad(prev), "next=", point_to_kicad(next)
+        print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(prev), point_to_kicad(next))
+    
+        prev = next
+
+    # Draw inner circle
+    middle = complex(0, 0)
+    threeoclock = complex(A * 0.24, 0)
+    print >>f, \
+"""$DRAWSEGMENT
+Po 3 %s %s 150
+De 28 0 900 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(middle), point_to_kicad(threeoclock))
+
+def emit_mounting_holes(f):
+    for p in xrange(0, 8):
+        hole = cmath.rect(B * 0.81, p * deg45)
+        print >>f, \
+"""$MODULE 1pin
+Po %s 0 15 00200000 4F58C9C0 ~~
+Li 1pin
+Cd module 1 pin (ou trou mecanique de percage)
+Kw DEV
+Sc 4F58C9C0
+AR /4F58C8C9
+Op 0 0 0
+T0 0 -1200 400 400 0 100 N V 21 N "P%d"
+T1 0 1100 400 400 0 100 N I 21 N ""
+DC 0 0 0 -900 150 21
+$PAD
+Sh "1" C 1600 1600 0 0 0
+Dr 1200 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 0
+$EndPAD
+$EndMODULE  1pin""" % (point_to_kicad(hole), p + 25)
+
+def emit_output_holes(f):
+    for p in xrange(0, 16):
+        hole = cmath.rect(A * 0.70, (p + 0.5) * deg45 / 2)
+        symbol = cmath.rect(abs(hole) * 1.2, cmath.phase(hole))
+        symboldiff = symbol - hole
+        if p % 2 == 0:
+            part = p / 2 + 5
+            sign = "-"
+            net = '2 "N-000009"'
+        else:
+            part = p / 2 + 17
+            sign = "+"
+            net = '1 "N-000001"'
+# T0 0 -1200 400 400 0 100 N V 21 N "P%d"
+        print >>f, \
+"""$MODULE 1pin
+Po %s 0 15 00200000 4F58C9C4 ~~
+Li 1pin
+Cd module 1 pin (ou trou mecanique de percage)
+Kw DEV
+Sc 4F58C9C4
+AR /4F583B52
+Op 0 0 0
+T0 0 -1200 400 400 0 100 N V 21 N ""
+T1 %s 1000 1000 0 100 N I 21 N "%s"
+DC 0 0 0 -900 150 21
+$PAD
+Sh "1" C 1600 1600 0 0 0
+Dr 1200 0 0
+At STD N 00E0FFFF
+Ne %s
+Po 0 0
+$EndPAD
+$EndMODULE  1pin
+""" % (point_to_kicad(hole), point_to_kicad(symboldiff, no_offset), sign, net)
+
+def emit_input_holes(f):
+    for p in xrange(0, 8):
+        hole = cmath.rect(A * 0.44, (p + 0.5) * deg45)
+        if p % 2 == 0:
+            part = p / 2 + 1
+            sign = "+"
+            net = '1 "N-000001"'
+        else:
+            part = p / 2 + 13
+            sign = "-"
+            net = '2 "N-000009"'
+        print >>f, \
+"""$MODULE 1pin
+Po %s 0 15 00200000 4F58C9D4 ~~
+Li 1pin
+Cd module 1 pin (ou trou mecanique de percage)
+Kw DEV
+Sc 4F58C9D4
+AR /4F583B54
+Op 0 0 0
+T0 0 -1200 400 400 0 100 N V 21 N "P%d"
+T1 0 1100 400 400 0 100 N I 21 N "%s"
+DC 0 0 0 -900 150 21
+$PAD
+Sh "1" C 1600 1600 0 0 0
+Dr 1200 0 0
+At STD N 00E0FFFF
+Ne %s
+Po 0 0
+$EndPAD
+$EndMODULE  1pin
+""" % (point_to_kicad(hole), part, sign, net)
+
+f = open("segment.inc", "w")
+emit_border(f)
+
+f = open("mounting-holes.inc", "w")
+emit_mounting_holes(f)
+
+f = open("output-holes.inc", "w")
+emit_output_holes(f)
+
+f = open("input-holes.inc", "w")
+emit_input_holes(f)
+

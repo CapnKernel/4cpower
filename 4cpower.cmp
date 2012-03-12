@@ -1,0 +1,227 @@
+Cmp-Mod V01 Genere par PcbNew le Fri 09 Mar 2012 17:04:42 HKT
+
+BeginCmp
+TimeStamp = /4F58263D;
+Reference = P1;
+ValeurCmp = +;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58268A;
+Reference = P2;
+ValeurCmp = +;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5826A0;
+Reference = P3;
+ValeurCmp = +;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582699;
+Reference = P4;
+ValeurCmp = +;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582646;
+Reference = P5;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582664;
+Reference = P6;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582688;
+Reference = P7;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582687;
+Reference = P8;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269E;
+Reference = P9;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269D;
+Reference = P10;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269A;
+Reference = P11;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269C;
+Reference = P12;
+ValeurCmp = +;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B59;
+Reference = P13;
+ValeurCmp = -;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B55;
+Reference = P14;
+ValeurCmp = -;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B4F;
+Reference = P15;
+ValeurCmp = -;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B54;
+Reference = P16;
+ValeurCmp = -;
+IdModule  = input_hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B58;
+Reference = P17;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B57;
+Reference = P18;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B56;
+Reference = P19;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B4E;
+Reference = P20;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B50;
+Reference = P21;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B51;
+Reference = P22;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B53;
+Reference = P23;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B52;
+Reference = P24;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8C8;
+Reference = P25;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8C9;
+Reference = P26;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8CB;
+Reference = P27;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8CA;
+Reference = P28;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58CC77;
+Reference = P29;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58CC76;
+Reference = P30;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58CC74;
+Reference = P31;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58CC75;
+Reference = P32;
+ValeurCmp = -;
+IdModule  = 1pin;
+EndCmp
+
+EndListe
