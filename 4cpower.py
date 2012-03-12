@@ -109,6 +109,8 @@ $EndMODULE  1pin
 def emit_input_holes(f):
     for p in xrange(0, 8):
         hole = cmath.rect(A * 0.44, (p + 0.5) * deg45)
+        symbol = cmath.rect(abs(hole) * 0.7, cmath.phase(hole))
+        symboldiff = symbol - hole
         if p % 2 == 0:
             part = p / 2 + 1
             sign = "+"
@@ -117,6 +119,7 @@ def emit_input_holes(f):
             part = p / 2 + 13
             sign = "-"
             net = '2 "N-000009"'
+# T0 0 -1200 400 400 0 100 N V 21 N "P%d"
         print >>f, \
 """$MODULE 1pin
 Po %s 0 15 00200000 4F58C9D4 ~~
@@ -126,8 +129,8 @@ Kw DEV
 Sc 4F58C9D4
 AR /4F583B54
 Op 0 0 0
-T0 0 -1200 400 400 0 100 N V 21 N "P%d"
-T1 0 1100 400 400 0 100 N I 21 N "%s"
+T0 0 -1200 400 400 0 100 N V 21 N ""
+T1 %s 1000 1000 0 100 N I 21 N "%s"
 DC 0 0 0 -900 150 21
 $PAD
 Sh "1" C 1600 1600 0 0 0
@@ -137,7 +140,7 @@ Ne %s
 Po 0 0
 $EndPAD
 $EndMODULE  1pin
-""" % (point_to_kicad(hole), part, sign, net)
+""" % (point_to_kicad(hole), point_to_kicad(symboldiff, no_offset), sign, net)
 
 f = open("segment.inc", "w")
 emit_border(f)
