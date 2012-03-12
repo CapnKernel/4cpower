@@ -1,227 +1,227 @@
-Cmp-Mod V01 Genere par PcbNew le Fri 09 Mar 2012 17:04:42 HKT
+Cmp-Mod V01 Created by CvPcb (2012-01-19 BZR 3256)-stable date = Mon 12 Mar 2012 18:49:56 HKT
 
 BeginCmp
 TimeStamp = /4F58263D;
 Reference = P1;
 ValeurCmp = +;
-IdModule  = input_hole;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58268A;
-Reference = P2;
-ValeurCmp = +;
-IdModule  = input_hole;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F5826A0;
-Reference = P3;
-ValeurCmp = +;
-IdModule  = input_hole;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F582699;
-Reference = P4;
-ValeurCmp = +;
-IdModule  = input_hole;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F582646;
-Reference = P5;
+Reference = P2;
 ValeurCmp = +;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F582664;
-Reference = P6;
+Reference = P3;
 ValeurCmp = +;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F582688;
-Reference = P7;
-ValeurCmp = +;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F582687;
-Reference = P8;
-ValeurCmp = +;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58269E;
-Reference = P9;
-ValeurCmp = +;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58269D;
-Reference = P10;
-ValeurCmp = +;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58269A;
-Reference = P11;
-ValeurCmp = +;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58269C;
-Reference = P12;
-ValeurCmp = +;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B59;
-Reference = P13;
+Reference = P4;
 ValeurCmp = -;
-IdModule  = input_hole;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F583B55;
-Reference = P14;
-ValeurCmp = -;
-IdModule  = input_hole;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F583B4F;
-Reference = P15;
-ValeurCmp = -;
-IdModule  = input_hole;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F583B54;
-Reference = P16;
-ValeurCmp = -;
-IdModule  = input_hole;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B58;
-Reference = P17;
+Reference = P5;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B57;
-Reference = P18;
+Reference = P6;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58268A;
+Reference = P7;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582688;
+Reference = P8;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582687;
+Reference = P9;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B55;
+Reference = P10;
+ValeurCmp = -;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B56;
-Reference = P19;
+Reference = P11;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B4E;
-Reference = P20;
+Reference = P12;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5826A0;
+Reference = P13;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269E;
+Reference = P14;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269D;
+Reference = P15;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B4F;
+Reference = P16;
+ValeurCmp = -;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B50;
-Reference = P21;
+Reference = P17;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B51;
+Reference = P18;
+ValeurCmp = -;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F582699;
+Reference = P19;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269A;
+Reference = P20;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58269C;
+Reference = P21;
+ValeurCmp = +;
+IdModule  = power-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F583B54;
 Reference = P22;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B53;
 Reference = P23;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F583B52;
 Reference = P24;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = power-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F58C8C8;
 Reference = P25;
 ValeurCmp = -;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58C8C9;
-Reference = P26;
-ValeurCmp = -;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58C8CB;
-Reference = P27;
-ValeurCmp = -;
-IdModule  = 1pin;
-EndCmp
-
-BeginCmp
-TimeStamp = /4F58C8CA;
-Reference = P28;
-ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = mounting-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F58CC77;
-Reference = P29;
+Reference = P26;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = mounting-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8C9;
+Reference = P27;
+ValeurCmp = -;
+IdModule  = mounting-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F58CC76;
-Reference = P30;
+Reference = P28;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = mounting-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8CB;
+Reference = P29;
+ValeurCmp = -;
+IdModule  = mounting-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F58CC74;
+Reference = P30;
+ValeurCmp = -;
+IdModule  = mounting-hole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F58C8CA;
 Reference = P31;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = mounting-hole;
 EndCmp
 
 BeginCmp
 TimeStamp = /4F58CC75;
 Reference = P32;
 ValeurCmp = -;
-IdModule  = 1pin;
+IdModule  = mounting-hole;
 EndCmp
 
 EndListe

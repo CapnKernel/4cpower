@@ -1,99 +1,99 @@
-# EESchema Netlist Version 1.1 created  Fri 09 Mar 2012 17:04:05 HKT
+# EESchema Netlist Version 1.1 created  Mon 12 Mar 2012 18:49:56 HKT
 (
- ( /4F58263D input_hole P1 +
+ ( /4F58263D power-hole P1 +
   ( 1 N-000001 )
  )
- ( /4F58268A input_hole P2 +
+ ( /4F582646 power-hole P2 +
   ( 1 N-000001 )
  )
- ( /4F5826A0 input_hole P3 +
+ ( /4F582664 power-hole P3 +
   ( 1 N-000001 )
  )
- ( /4F582699 input_hole P4 +
+ ( /4F583B59 power-hole P4 -
+  ( 1 N-000009 )
+ )
+ ( /4F583B58 power-hole P5 -
+  ( 1 N-000009 )
+ )
+ ( /4F583B57 power-hole P6 -
+  ( 1 N-000009 )
+ )
+ ( /4F58268A power-hole P7 +
   ( 1 N-000001 )
  )
- ( /4F582646 1pin P5 +
+ ( /4F582688 power-hole P8 +
   ( 1 N-000001 )
  )
- ( /4F582664 1pin P6 +
+ ( /4F582687 power-hole P9 +
   ( 1 N-000001 )
  )
- ( /4F582688 1pin P7 +
+ ( /4F583B55 power-hole P10 -
+  ( 1 N-000009 )
+ )
+ ( /4F583B56 power-hole P11 -
+  ( 1 N-000009 )
+ )
+ ( /4F583B4E power-hole P12 -
+  ( 1 N-000009 )
+ )
+ ( /4F5826A0 power-hole P13 +
   ( 1 N-000001 )
  )
- ( /4F582687 1pin P8 +
+ ( /4F58269E power-hole P14 +
   ( 1 N-000001 )
  )
- ( /4F58269E 1pin P9 +
+ ( /4F58269D power-hole P15 +
   ( 1 N-000001 )
  )
- ( /4F58269D 1pin P10 +
+ ( /4F583B4F power-hole P16 -
+  ( 1 N-000009 )
+ )
+ ( /4F583B50 power-hole P17 -
+  ( 1 N-000009 )
+ )
+ ( /4F583B51 power-hole P18 -
+  ( 1 N-000009 )
+ )
+ ( /4F582699 power-hole P19 +
   ( 1 N-000001 )
  )
- ( /4F58269A 1pin P11 +
+ ( /4F58269A power-hole P20 +
   ( 1 N-000001 )
  )
- ( /4F58269C 1pin P12 +
+ ( /4F58269C power-hole P21 +
   ( 1 N-000001 )
  )
- ( /4F583B59 input_hole P13 -
+ ( /4F583B54 power-hole P22 -
   ( 1 N-000009 )
  )
- ( /4F583B55 input_hole P14 -
+ ( /4F583B53 power-hole P23 -
   ( 1 N-000009 )
  )
- ( /4F583B4F input_hole P15 -
+ ( /4F583B52 power-hole P24 -
   ( 1 N-000009 )
  )
- ( /4F583B54 input_hole P16 -
-  ( 1 N-000009 )
- )
- ( /4F583B58 1pin P17 -
-  ( 1 N-000009 )
- )
- ( /4F583B57 1pin P18 -
-  ( 1 N-000009 )
- )
- ( /4F583B56 1pin P19 -
-  ( 1 N-000009 )
- )
- ( /4F583B4E 1pin P20 -
-  ( 1 N-000009 )
- )
- ( /4F583B50 1pin P21 -
-  ( 1 N-000009 )
- )
- ( /4F583B51 1pin P22 -
-  ( 1 N-000009 )
- )
- ( /4F583B53 1pin P23 -
-  ( 1 N-000009 )
- )
- ( /4F583B52 1pin P24 -
-  ( 1 N-000009 )
- )
- ( /4F58C8C8 1pin P25 -
+ ( /4F58C8C8 mounting-hole P25 -
   ( 1 ? )
  )
- ( /4F58C8C9 1pin P26 -
+ ( /4F58CC77 mounting-hole P26 -
   ( 1 ? )
  )
- ( /4F58C8CB 1pin P27 -
+ ( /4F58C8C9 mounting-hole P27 -
   ( 1 ? )
  )
- ( /4F58C8CA 1pin P28 -
+ ( /4F58CC76 mounting-hole P28 -
   ( 1 ? )
  )
- ( /4F58CC77 1pin P29 -
+ ( /4F58C8CB mounting-hole P29 -
   ( 1 ? )
  )
- ( /4F58CC76 1pin P30 -
+ ( /4F58CC74 mounting-hole P30 -
   ( 1 ? )
  )
- ( /4F58CC74 1pin P31 -
+ ( /4F58C8CA mounting-hole P31 -
   ( 1 ? )
  )
- ( /4F58CC75 1pin P32 -
+ ( /4F58CC75 mounting-hole P32 -
   ( 1 ? )
  )
 )

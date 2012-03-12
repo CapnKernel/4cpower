@@ -1,4 +1,4 @@
-update=Fri 09 Mar 2012 16:59:36 HKT
+update=Mon 12 Mar 2012 18:45:06 HKT
 version=1
 last_client=pcbnew
 [eeschema]
@@ -90,14 +90,3 @@ LastNetListRead=
 [pcbnew/libraries]
 LibDir=
 LibName1=4cpower
-LibName2=sockets
-LibName3=connect
-LibName4=discret
-LibName5=pin_array
-LibName6=divers
-LibName7=libcms
-LibName8=display
-LibName9=led
-LibName10=dip_sockets
-LibName11=pga_sockets
-LibName12=valves

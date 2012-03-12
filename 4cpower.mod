@@ -1,8 +1,8 @@
-PCBNEW-LibModule-V1  Mon 12 Mar 2012 12:40:32 HKT
+PCBNEW-LibModule-V1  Mon 12 Mar 2012 17:15:38 HKT
 # encoding utf-8
 $INDEX
-power-hole
 mounting-hole
+power-hole
 $EndINDEX
 $MODULE power-hole
 Po 0 0 0 15 4F5D7E37 00000000 ~~
