@@ -1,5 +1,5 @@
 TARGET:=4cpower.brd
-INCLUDES:=nets.inc input-holes.inc output-holes.inc mounting-holes.inc segment.inc
+INCLUDES:=nets.inc power-holes.inc mounting-holes.inc segment.inc
 
 all: $(TARGET)
 

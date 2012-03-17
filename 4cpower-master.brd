@@ -77,8 +77,7 @@ AddNet ""
 AddNet "N-000001"
 AddNet "N-000009"
 $EndNCLASS
-#include "input-holes.inc"
-#include "output-holes.inc"
+#include "power-holes.inc"
 #include "mounting-holes.inc"
 #include "segment.inc"
 $TRACK

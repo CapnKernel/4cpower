@@ -8,14 +8,14 @@ B = math.sqrt(2*A*A)
 
 deg45 = math.pi / 4
 
-page_offset = complex(6 * 25.4, 4 * 25.4)
+page_offset = complex(6 * 25.4, -4 * 25.4)
 no_offset = complex(0, 0)
 
 def point_to_kicad(p, origin=page_offset):
 
     """ Convert a point in mm to a string in thousandths of an inch """
     offset_p = p + origin
-    return "%d %d" % (int((offset_p.real / 25.4) * 10000), int((offset_p.imag / 25.4) * 10000))
+    return "%d %d" % (int((offset_p.real / 25.4) * 10000), -int((offset_p.imag / 25.4) * 10000))
 
 def emit_border(f):
     # Start from the 3 o'clock position
@@ -71,20 +71,48 @@ Po 0 0
 $EndPAD
 $EndMODULE  mounting-hole""" % point_to_kicad(hole)
 
-def emit_output_holes(f):
-    for p in xrange(0, 16):
-        hole = cmath.rect(A * 0.80, (p + 0.5) * deg45 / 2)
-        symbol = cmath.rect(abs(hole) * 1.25, cmath.phase(hole))
-        symboldiff = symbol - hole
-        if p % 4 < 2:
-            # part = p / 2 + 5
-            sign = "+"
-            net = '1 "N-000001"'
-        else:
-            # part = p / 2 + 17
-            sign = "-"
-            net = '2 "N-000009"'
-# T0 0 -1200 400 400 0 100 N V 21 N "P%d"
+def emit_group(f, group):
+    # print "group=", group, "about to do inner hole and symbol"
+    hole = cmath.rect(A * 0.45, (group + 0.5) * deg45)
+    symbol = cmath.rect(abs(hole) * 1.45, cmath.phase(hole))
+    symboldiff = symbol - hole
+    if group % 2 == 0:
+        part = group * 3 + 1
+        sign = "+"
+        net = '1 "N-000001"'
+    else:
+        part = group * 3 + 1
+        sign = "-"
+        net = '2 "N-000009"'
+# T0 0 -1600 400 400 0 100 N V 21 N ""
+# DC 0 0 1000 800 150 21
+    print >>f, \
+"""$MODULE power-hole
+Po %s 0 15 00200000 4F58C9C4 ~~
+Li power-hole
+Cd Input/Output hole
+Kw DEV
+Sc 4F58C9C4
+AR /4F583B52
+Op 0 0 0
+T0 0 0 400 400 0 100 N V 21 N "P%d"
+T1 %s 1000 1000 0 250 N I 21 N "%s",
+$PAD
+Sh "1" C 2200 2400 0 0 0
+Dr 1000 0 0
+At STD N 00E0FFFF
+Ne %s
+Po 0 0
+$EndPAD
+$EndMODULE  power-hole""" % \
+(point_to_kicad(hole), part, point_to_kicad(symboldiff, no_offset), sign, net)
+
+    for outerholeid in range(0, 2):
+        outerpart = part + outerholeid + 1
+        # print "group=", group, "part=", part, "outerholeid=", outerholeid, "outerpart=", outerpart, "about to do an outer hole"
+        hole = cmath.rect(A * 0.80, (group * 2 + outerholeid + 0.5) * deg45 / 2)
+        # symbol = cmath.rect(abs(hole) * 1.25, cmath.phase(hole))
+        # symboldiff = symbol - hole
 # T0 0 -1600 400 400 0 100 N V 21 N "%s"
 # T1 %s 1000 1000 0 100 N I 21 N "%s"
 # DC 0 0 1100 800 150 21
@@ -97,6 +125,7 @@ Kw DEV
 Sc 4F58C9C4
 AR /4F583B52
 Op 0 0 0
+T0 0 0 400 400 0 100 N V 21 N "P%d"
 $PAD
 Sh "1" C 2400 2400 0 0 0
 Dr 1000 0 0
@@ -104,44 +133,7 @@ At STD N 00E0FFFF
 Ne %s
 Po 0 0
 $EndPAD
-$EndMODULE  power-hole
-""" % (point_to_kicad(hole), net)
-
-def emit_input_holes(f):
-    for p in xrange(0, 8):
-        hole = cmath.rect(A * 0.45, (p + 0.5) * deg45)
-        symbol = cmath.rect(abs(hole) * 1.45, cmath.phase(hole))
-        symboldiff = symbol - hole
-        if p % 2 == 0:
-            part = p / 2 + 1
-            sign = "+"
-            net = '1 "N-000001"'
-        else:
-            part = p / 2 + 13
-            sign = "-"
-            net = '2 "N-000009"'
-# T0 0 -1200 400 400 0 100 N V 21 N "P%d"
-# T0 0 -1600 400 400 0 100 N V 21 N ""
-# DC 0 0 1000 800 150 21
-        print >>f, \
-"""$MODULE power-hole
-Po %s 0 15 00200000 4F58C9C4 ~~
-Li power-hole
-Cd Input/Output hole
-Kw DEV
-Sc 4F58C9C4
-AR /4F583B52
-Op 0 0 0
-T1 %s 1000 1000 0 250 N I 21 N "%s"
-$PAD
-Sh "1" C 2200 2400 0 0 0
-Dr 1000 0 0
-At STD N 00E0FFFF
-Ne %s
-Po 0 0
-$EndPAD
-$EndMODULE  power-hole
-""" % (point_to_kicad(hole), point_to_kicad(symboldiff, no_offset), sign, net)
+$EndMODULE  power-hole""" % (point_to_kicad(hole), outerpart, net)
 
 f = open("segment.inc", "w")
 emit_border(f)
@@ -149,9 +141,7 @@ emit_border(f)
 f = open("mounting-holes.inc", "w")
 emit_mounting_holes(f)
 
-f = open("output-holes.inc", "w")
-emit_output_holes(f)
-
-f = open("input-holes.inc", "w")
-emit_input_holes(f)
+f = open("power-holes.inc", "w")
+for group in range(0, 8):
+    emit_group(f, group)
 
