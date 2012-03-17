@@ -11,7 +11,7 @@ EnabledLayers 1FFF8001
 Links 22
 NoConn 22
 Di 56649 24249 86851 53851
-Ndraw 17
+#include "ndraw.inc"
 Ntrack 0
 Nzone 0
 BoardThickness 630

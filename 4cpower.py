@@ -11,6 +11,8 @@ deg45 = math.pi / 4
 page_offset = complex(6 * 25.4, -4 * 25.4)
 no_offset = complex(0, 0)
 
+segments = 0
+
 def point_to_kicad(p, origin=page_offset):
 
     """ Convert a point in mm to a string in thousandths of an inch """
@@ -18,6 +20,8 @@ def point_to_kicad(p, origin=page_offset):
     return "%d %d" % (int((offset_p.real / 25.4) * 10000), -int((offset_p.imag / 25.4) * 10000))
 
 def emit_border(f):
+    global segments
+
     # Start from the 3 o'clock position
     prev = cmath.rect(B, 0)
     # Calculate the position of the next point
@@ -34,15 +38,17 @@ def emit_border(f):
         # print "p=", p, "prev=", prev, "next=", next
         # print "p=", p, "prev=", point_to_kicad(prev), "next=", point_to_kicad(next)
         print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(prev), point_to_kicad(next))
+        segments = segments + 1
     
         prev = next
 
     # Draw inner circle
     middle = complex(0, 0)
     threeoclock = complex(A * 0.24, 0)
+    segments = segments + 1
     print >>f, \
 """$DRAWSEGMENT
-Po 3 %s %s 150
+Po 3 %s %s 150w
 De 28 0 900 0 0
 $EndDRAWSEGMENT""" % (point_to_kicad(middle), point_to_kicad(threeoclock))
 
@@ -72,10 +78,12 @@ $EndPAD
 $EndMODULE  mounting-hole""" % point_to_kicad(hole)
 
 def emit_group(f, group):
+    global segments
     # print "group=", group, "about to do inner hole and symbol"
-    hole = cmath.rect(A * 0.45, (group + 0.5) * deg45)
-    symbol = cmath.rect(abs(hole) * 1.45, cmath.phase(hole))
-    symboldiff = symbol - hole
+    angle_from_centre_to_inner_hole = (group + 0.5) * deg45
+    innerhole = cmath.rect(A * 0.45, angle_from_centre_to_inner_hole)
+    symbol = cmath.rect(abs(innerhole) * 1.45, cmath.phase(innerhole))
+    symboldiff = symbol - innerhole
     if group % 2 == 0:
         part = group * 3 + 1
         sign = "+"
@@ -105,12 +113,12 @@ Ne %s
 Po 0 0
 $EndPAD
 $EndMODULE  power-hole""" % \
-(point_to_kicad(hole), part, point_to_kicad(symboldiff, no_offset), sign, net)
+(point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_offset), sign, net)
 
     for outerholeid in range(0, 2):
         outerpart = part + outerholeid + 1
         # print "group=", group, "part=", part, "outerholeid=", outerholeid, "outerpart=", outerpart, "about to do an outer hole"
-        hole = cmath.rect(A * 0.80, (group * 2 + outerholeid + 0.5) * deg45 / 2)
+        outerhole = cmath.rect(A * 0.80, (group * 2 + outerholeid + 0.5) * deg45 / 2)
         # symbol = cmath.rect(abs(hole) * 1.25, cmath.phase(hole))
         # symboldiff = symbol - hole
 # T0 0 -1600 400 400 0 100 N V 21 N "%s"
@@ -133,7 +141,22 @@ At STD N 00E0FFFF
 Ne %s
 Po 0 0
 $EndPAD
-$EndMODULE  power-hole""" % (point_to_kicad(hole), outerpart, net)
+$EndMODULE  power-hole""" % (point_to_kicad(outerhole), outerpart, net)
+
+    print "bottom arc"
+    print "angle_from_centre_to_inner_hole=", math.degrees(angle_from_centre_to_inner_hole)
+    angle_from_inner_hole_to_start_of_inner_arc = angle_from_centre_to_inner_hole - math.radians(120)
+    print "angle_from_inner_hole_to_start_of_inner_arc=", math.degrees(angle_from_inner_hole_to_start_of_inner_arc)
+    vector_to_inner_arc_start = cmath.rect(4, angle_from_inner_hole_to_start_of_inner_arc)
+    inner_arc_start = innerhole + vector_to_inner_arc_start
+    print "vector_to_inner_arc_start=", vector_to_inner_arc_start
+    print "inner_arc_start=", inner_arc_start
+    print >>f, \
+"""$DRAWSEGMENT
+Po 2 %s %s 150
+De 21 0 1200 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(inner_arc_start))
+    segments = segments + 1
 
 f = open("segment.inc", "w")
 emit_border(f)
@@ -145,3 +168,5 @@ f = open("power-holes.inc", "w")
 for group in range(0, 8):
     emit_group(f, group)
 
+f = open("ndraw.inc", "w")
+print >>f, "Ndraw %d" % segments
