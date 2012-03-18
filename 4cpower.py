@@ -11,6 +11,9 @@ deg45 = math.pi / 4
 page_offset = complex(6 * 25.4, -4 * 25.4)
 no_offset = complex(0, 0)
 
+inner_distance = A * 0.45
+outer_distance = A * 0.80
+
 segments = 0
 
 def point_to_kicad(p, origin=page_offset):
@@ -81,7 +84,7 @@ def emit_group(f, group):
     global segments
     # print "group=", group, "about to do inner hole and symbol"
     angle_from_centre_to_inner_hole = (group + 0.5) * deg45
-    innerhole = cmath.rect(A * 0.45, angle_from_centre_to_inner_hole)
+    innerhole = cmath.rect(inner_distance, angle_from_centre_to_inner_hole)
     symbol = cmath.rect(abs(innerhole) * 1.45, cmath.phase(innerhole))
     symboldiff = symbol - innerhole
     if group % 2 == 0:
@@ -118,7 +121,7 @@ $EndMODULE  power-hole""" % \
     for outerholeid in range(0, 2):
         outerpart = part + outerholeid + 1
         # print "group=", group, "part=", part, "outerholeid=", outerholeid, "outerpart=", outerpart, "about to do an outer hole"
-        outerhole = cmath.rect(A * 0.80, (group * 2 + outerholeid + 0.5) * deg45 / 2)
+        outerhole = cmath.rect(outer_distance, (group * 2 + outerholeid + 0.5) * deg45 / 2)
         # symbol = cmath.rect(abs(hole) * 1.25, cmath.phase(hole))
         # symboldiff = symbol - hole
 # T0 0 -1600 400 400 0 100 N V 21 N "%s"
@@ -143,14 +146,19 @@ Po 0 0
 $EndPAD
 $EndMODULE  power-hole""" % (point_to_kicad(outerhole), outerpart, net)
 
-    print "bottom arc"
-    print "angle_from_centre_to_inner_hole=", math.degrees(angle_from_centre_to_inner_hole)
+    # Calculate points needed for inner arc
+    # print "angle_from_centre_to_inner_hole=", math.degrees(angle_from_centre_to_inner_hole)
     angle_from_inner_hole_to_start_of_inner_arc = angle_from_centre_to_inner_hole - math.radians(120)
-    print "angle_from_inner_hole_to_start_of_inner_arc=", math.degrees(angle_from_inner_hole_to_start_of_inner_arc)
+    angle_from_inner_hole_to_end_of_inner_arc = angle_from_centre_to_inner_hole + math.radians(120)
+    # print "angle_from_inner_hole_to_start_of_inner_arc=", math.degrees(angle_from_inner_hole_to_start_of_inner_arc)
     vector_to_inner_arc_start = cmath.rect(4, angle_from_inner_hole_to_start_of_inner_arc)
+    vector_to_inner_arc_end = cmath.rect(4, angle_from_inner_hole_to_end_of_inner_arc)
     inner_arc_start = innerhole + vector_to_inner_arc_start
+    inner_arc_end = innerhole + vector_to_inner_arc_end
+
     print "vector_to_inner_arc_start=", vector_to_inner_arc_start
     print "inner_arc_start=", inner_arc_start
+
     print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
