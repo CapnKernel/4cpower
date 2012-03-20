@@ -14,6 +14,25 @@ no_offset = complex(0, 0)
 inner_distance = A * 0.45
 outer_distance = A * 0.80
 
+# Distance of border away from holes.
+border_standoff = 4
+
+# print "inner_distance=", inner_distance
+# print "outer_distance=", outer_distance
+
+# Use cosine law to calculate distance between inner and outer hole.
+inner_to_outer_distance = math.sqrt(inner_distance * inner_distance + outer_distance * outer_distance - 2 * inner_distance * outer_distance * math.cos(math.radians(11.25)))
+# print "inner_to_outer_distance=", inner_to_outer_distance
+
+# Use sine law to calculate angle between line from centre through inner, and inner to outer.
+outer_angle = math.radians(11.25)
+# print "outer_angle=", math.degrees(outer_angle), "math.sin(outer_angle)=", math.sin(math.radians(11.25))
+centre_inner_outer_angle = math.asin(outer_distance * math.sin(outer_angle) / inner_to_outer_distance)
+# print "centre_inner_outer_angle=", math.degrees(centre_inner_outer_angle)
+inner_to_outer_deviation_angle = math.pi - centre_inner_outer_angle
+# print "inner_to_outer_deviation_angle=", math.degrees(inner_to_outer_deviation_angle)
+# assert 1==0
+
 segments = 0
 
 def point_to_kicad(p, origin=page_offset):
@@ -118,10 +137,14 @@ $EndPAD
 $EndMODULE  power-hole""" % \
 (point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_offset), sign, net)
 
+    outerhole = {}
     for outerholeid in range(0, 2):
         outerpart = part + outerholeid + 1
         # print "group=", group, "part=", part, "outerholeid=", outerholeid, "outerpart=", outerpart, "about to do an outer hole"
-        outerhole = cmath.rect(outer_distance, (group * 2 + outerholeid + 0.5) * deg45 / 2)
+        angle = (group * 2 + outerholeid + 0.5) * deg45 / 2
+        # print "angle=", math.degrees(angle)
+        outerhole[outerholeid] = cmath.rect(outer_distance, angle)
+
         # symbol = cmath.rect(abs(hole) * 1.25, cmath.phase(hole))
         # symboldiff = symbol - hole
 # T0 0 -1600 400 400 0 100 N V 21 N "%s"
@@ -144,20 +167,20 @@ At STD N 00E0FFFF
 Ne %s
 Po 0 0
 $EndPAD
-$EndMODULE  power-hole""" % (point_to_kicad(outerhole), outerpart, net)
-
+$EndMODULE  power-hole""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
+ 
     # Calculate points needed for inner arc
     # print "angle_from_centre_to_inner_hole=", math.degrees(angle_from_centre_to_inner_hole)
     angle_from_inner_hole_to_start_of_inner_arc = angle_from_centre_to_inner_hole - math.radians(120)
     angle_from_inner_hole_to_end_of_inner_arc = angle_from_centre_to_inner_hole + math.radians(120)
     # print "angle_from_inner_hole_to_start_of_inner_arc=", math.degrees(angle_from_inner_hole_to_start_of_inner_arc)
-    vector_to_inner_arc_start = cmath.rect(4, angle_from_inner_hole_to_start_of_inner_arc)
-    vector_to_inner_arc_end = cmath.rect(4, angle_from_inner_hole_to_end_of_inner_arc)
+    vector_to_inner_arc_start = cmath.rect(border_standoff, angle_from_inner_hole_to_start_of_inner_arc)
+    vector_to_inner_arc_end = cmath.rect(border_standoff, angle_from_inner_hole_to_end_of_inner_arc)
     inner_arc_start = innerhole + vector_to_inner_arc_start
     inner_arc_end = innerhole + vector_to_inner_arc_end
 
-    print "vector_to_inner_arc_start=", vector_to_inner_arc_start
-    print "inner_arc_start=", inner_arc_start
+    # print "vector_to_inner_arc_start=", vector_to_inner_arc_start
+    # print "inner_arc_start=", inner_arc_start
 
     print >>f, \
 """$DRAWSEGMENT
