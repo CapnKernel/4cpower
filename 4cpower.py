@@ -201,24 +201,13 @@ Po 0 %s %s 150
 De 21 0 900 0 0
 $EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh1_line_start), point_to_kicad(ih_to_oh1_line_end))
 
-    # Calculate points needed for inner arc
-    # print "angle_from_centre_to_inner_hole=", math.degrees(angle_from_centre_to_inner_hole)
-    angle_from_inner_hole_to_start_of_inner_arc = angle_from_centre_to_inner_hole - math.radians(120)
-    angle_from_inner_hole_to_end_of_inner_arc = angle_from_centre_to_inner_hole + math.radians(120)
-    # print "angle_from_inner_hole_to_start_of_inner_arc=", math.degrees(angle_from_inner_hole_to_start_of_inner_arc)
-    vector_to_inner_arc_start = cmath.rect(border_standoff, angle_from_inner_hole_to_start_of_inner_arc)
-    vector_to_inner_arc_end = cmath.rect(border_standoff, angle_from_inner_hole_to_end_of_inner_arc)
-    inner_arc_start = innerhole + vector_to_inner_arc_start
-    inner_arc_end = innerhole + vector_to_inner_arc_end
-
-    # print "vector_to_inner_arc_start=", vector_to_inner_arc_start
-    # print "inner_arc_start=", inner_arc_start
-
+    inner_arc_angle = 2 * math.pi - (cmath.phase(standoff_ih_to_oh1_vec) - cmath.phase(standoff_ih_to_oh0_vec))
+    print "inner_arc_angle=", math.degrees(inner_arc_angle)
     print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
-De 21 0 1200 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(inner_arc_start))
+De 21 0 %d 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(ih_to_oh0_line_start), int(math.degrees(inner_arc_angle) * 10))
     segments = segments + 1
 
 f = open("segment.inc", "w")
