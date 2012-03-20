@@ -142,12 +142,14 @@ $EndMODULE  power-hole""" % \
 (point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_offset), sign, net)
 
     outerhole = {}
+    standoff_ih_to_oh_vec = {}
     for outerholeid in range(0, 2):
         outerpart = part + outerholeid + 1
+        multiplier = outerholeid * 2 - 1
         # print "group=", group, "part=", part, "outerholeid=", outerholeid, "outerpart=", outerpart, "about to do an outer hole"
-        angle = (group * 2 + outerholeid + 0.5) * deg45 / 2
+        outer_angle = (group * 2 + outerholeid + 0.5) * deg45 / 2
         # print "angle=", math.degrees(angle)
-        outerhole[outerholeid] = cmath.rect(outer_distance, angle)
+        outerhole[outerholeid] = cmath.rect(outer_distance, outer_angle)
 
         # symbol = cmath.rect(abs(hole) * 1.25, cmath.phase(hole))
         # symboldiff = symbol - hole
@@ -173,41 +175,29 @@ Po 0 0
 $EndPAD
 $EndMODULE  power-hole""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
 
-    print "innerhole=", innerhole, as_polar_string(innerhole)
-    print "outerhole[0]=", outerhole[0], as_polar_string(outerhole[0])
-    print "outerhole[1]=", outerhole[1], as_polar_string(outerhole[1])
-    ih_to_oh0 = outerhole[0] - innerhole
-    print "ih_to_oh0=", ih_to_oh0, as_polar_string(ih_to_oh0)
-    ih_to_oh1 = outerhole[1] - innerhole
-    print "ih_to_oh1=", ih_to_oh1, as_polar_string(ih_to_oh1)
-    standoff_ih_to_oh0_vec = cmath.rect(border_standoff, cmath.phase(ih_to_oh0) - 2 * deg45)
-    print "standoff_ih_to_oh0_vec=", standoff_ih_to_oh0_vec, as_polar_string(standoff_ih_to_oh0_vec)
-    standoff_ih_to_oh1_vec = cmath.rect(border_standoff, cmath.phase(ih_to_oh1) + 2 * deg45)
-    print "standoff_ih_to_oh1_vec=", standoff_ih_to_oh1_vec, as_polar_string(standoff_ih_to_oh1_vec)
-    ih_to_oh0_line_start = innerhole + standoff_ih_to_oh0_vec
-    ih_to_oh0_line_end = outerhole[0] + standoff_ih_to_oh0_vec
-    ih_to_oh1_line_start = innerhole + standoff_ih_to_oh1_vec
-    ih_to_oh1_line_end = outerhole[1] + standoff_ih_to_oh1_vec
-    segments = segments + 1
-    print >>f, \
+        print "innerhole=", innerhole, as_polar_string(innerhole)
+        print "outerhole[outerholeid]=", outerhole[outerholeid], as_polar_string(outerhole[outerholeid])
+        ih_to_oh = outerhole[outerholeid] - innerhole
+        print "ih_to_oh=", ih_to_oh, as_polar_string(ih_to_oh)
+        standoff_ih_to_oh_vec[outerholeid] = cmath.rect(border_standoff, cmath.phase(ih_to_oh) + multiplier * 2 * deg45)
+        print "standoff_ih_to_oh_vec[outerholeid]=", standoff_ih_to_oh_vec[outerholeid], as_polar_string(standoff_ih_to_oh_vec[outerholeid])
+        
+        ih_to_oh_line_start = innerhole + standoff_ih_to_oh_vec[outerholeid]
+        ih_to_oh_line_end = outerhole[outerholeid] + standoff_ih_to_oh_vec[outerholeid]
+        segments = segments + 1
+        print >>f, \
 """$DRAWSEGMENT
 Po 0 %s %s 150
 De 21 0 900 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh0_line_start), point_to_kicad(ih_to_oh0_line_end))
-    segments = segments + 1
-    print >>f, \
-"""$DRAWSEGMENT
-Po 0 %s %s 150
-De 21 0 900 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh1_line_start), point_to_kicad(ih_to_oh1_line_end))
+$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh_line_start), point_to_kicad(ih_to_oh_line_end))
 
-    inner_arc_angle = 2 * math.pi - (cmath.phase(standoff_ih_to_oh1_vec) - cmath.phase(standoff_ih_to_oh0_vec))
+    inner_arc_angle = 2 * math.pi - (cmath.phase(standoff_ih_to_oh_vec[1]) - cmath.phase(standoff_ih_to_oh_vec[0]))
     print "inner_arc_angle=", math.degrees(inner_arc_angle)
     print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
 De 21 0 %d 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(ih_to_oh0_line_start), int(math.degrees(inner_arc_angle) * 10))
+$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(ih_to_oh_line_start), -int(math.degrees(inner_arc_angle) * 10))
     segments = segments + 1
 
 f = open("segment.inc", "w")
