@@ -214,12 +214,31 @@ $EndDRAWSEGMENT""" % (point_to_kicad(oh0_to_oh1_line_start), point_to_kicad(oh0_
     if inner_arc_angle > math.pi:
         inner_arc_angle = inner_arc_angle - 2 * math.pi
 
-    print "inner_arc_angle=", math.degrees(inner_arc_angle)
+    # print "inner_arc_angle=", math.degrees(inner_arc_angle)
     print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
 De 21 0 %d 0 0
 $EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(ih_to_oh_line_start), -int(math.degrees(inner_arc_angle) * 10))
+    segments = segments + 1
+
+    # Easy to calculate the angles of the other two arcs, as they are identical, and
+    # will use the angle not used by the inner arc.
+    outer_arc_angle = (2 * math.pi - inner_arc_angle) / 2
+    # print "outer_arc_angle=", math.degrees(outer_arc_angle)
+
+    print >>f, \
+"""$DRAWSEGMENT
+Po 2 %s %s 150
+De 21 0 %d 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(outerhole[1]), point_to_kicad(ih_to_oh_line_end), int(math.degrees(outer_arc_angle) * 10))
+    segments = segments + 1
+
+    print >>f, \
+"""$DRAWSEGMENT
+Po 2 %s %s 150
+De 21 0 %d 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(outerhole[0]), point_to_kicad(oh0_to_oh1_line_start), int(math.degrees(outer_arc_angle) * 10))
     segments = segments + 1
 
 f = open("segment.inc", "w")
@@ -231,6 +250,9 @@ emit_mounting_holes(f)
 f = open("power-holes.inc", "w")
 for group in range(0, 8):
     emit_group(f, group)
+
+f = open("zones.inc", "w")
+emit_zones(f)
 
 f = open("ndraw.inc", "w")
 print >>f, "Ndraw %d" % segments
