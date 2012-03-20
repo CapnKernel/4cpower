@@ -241,6 +241,37 @@ De 21 0 %d 0 0
 $EndDRAWSEGMENT""" % (point_to_kicad(outerhole[0]), point_to_kicad(oh0_to_oh1_line_start), int(math.degrees(outer_arc_angle) * 10))
     segments = segments + 1
 
+def emit_zones(f):
+    TL = complex(-B, B)
+    TR = complex(B, B)
+    BL = complex(-B, -B)
+    BR = complex(B, -B)
+
+    zoneparams = \
+"""ZClearance 200 T
+ZMinThickness 100
+ZOptions 0 16 F 200 200
+ZSmoothing 0 0
+ZCorner %s 0
+ZCorner %s 0
+ZCorner %s 0
+ZCorner %s 0
+ZCorner %s 1
+$endCZONE_OUTLINE""" % (point_to_kicad(TL), point_to_kicad(TR), point_to_kicad(BR), point_to_kicad(BL), point_to_kicad(TL))
+
+    print >>f, \
+"""$CZONE_OUTLINE
+ZInfo 4F6834F0 1 "N-000001"
+ZLayer 15
+ZAux 5 E"""
+    print >>f, zoneparams
+    print >>f, \
+"""$CZONE_OUTLINE
+ZInfo 4F68396B 2 "N-000009"
+ZLayer 0
+ZAux 4 E"""
+    print >>f, zoneparams
+ 
 f = open("segment.inc", "w")
 emit_border(f)
 
