@@ -1,4 +1,5 @@
 #! /usr/bin/python
+# coding: utf-8
 
 import math, cmath
 
@@ -34,6 +35,9 @@ inner_to_outer_deviation_angle = math.pi - centre_inner_outer_angle
 # assert 1==0
 
 segments = 0
+
+def as_polar_string(p):
+    return "(r=%f,θ=%f°)" % (abs(p), math.degrees(cmath.phase(p)))
 
 def point_to_kicad(p, origin=page_offset):
 
@@ -168,7 +172,35 @@ Ne %s
 Po 0 0
 $EndPAD
 $EndMODULE  power-hole""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
- 
+
+    print "innerhole=", innerhole, as_polar_string(innerhole)
+    print "outerhole[0]=", outerhole[0], as_polar_string(outerhole[0])
+    print "outerhole[1]=", outerhole[1], as_polar_string(outerhole[1])
+    ih_to_oh0 = outerhole[0] - innerhole
+    print "ih_to_oh0=", ih_to_oh0, as_polar_string(ih_to_oh0)
+    ih_to_oh1 = outerhole[1] - innerhole
+    print "ih_to_oh1=", ih_to_oh1, as_polar_string(ih_to_oh1)
+    standoff_ih_to_oh0_vec = cmath.rect(border_standoff, cmath.phase(ih_to_oh0) - 2 * deg45)
+    print "standoff_ih_to_oh0_vec=", standoff_ih_to_oh0_vec, as_polar_string(standoff_ih_to_oh0_vec)
+    standoff_ih_to_oh1_vec = cmath.rect(border_standoff, cmath.phase(ih_to_oh1) + 2 * deg45)
+    print "standoff_ih_to_oh1_vec=", standoff_ih_to_oh1_vec, as_polar_string(standoff_ih_to_oh1_vec)
+    ih_to_oh0_line_start = innerhole + standoff_ih_to_oh0_vec
+    ih_to_oh0_line_end = outerhole[0] + standoff_ih_to_oh0_vec
+    ih_to_oh1_line_start = innerhole + standoff_ih_to_oh1_vec
+    ih_to_oh1_line_end = outerhole[1] + standoff_ih_to_oh1_vec
+    segments = segments + 1
+    print >>f, \
+"""$DRAWSEGMENT
+Po 0 %s %s 150
+De 21 0 900 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh0_line_start), point_to_kicad(ih_to_oh0_line_end))
+    segments = segments + 1
+    print >>f, \
+"""$DRAWSEGMENT
+Po 0 %s %s 150
+De 21 0 900 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh1_line_start), point_to_kicad(ih_to_oh1_line_end))
+
     # Calculate points needed for inner arc
     # print "angle_from_centre_to_inner_hole=", math.degrees(angle_from_centre_to_inner_hole)
     angle_from_inner_hole_to_start_of_inner_arc = angle_from_centre_to_inner_hole - math.radians(120)
