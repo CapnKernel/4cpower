@@ -175,12 +175,12 @@ Po 0 0
 $EndPAD
 $EndMODULE  power-hole""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
 
-        print "innerhole=", innerhole, as_polar_string(innerhole)
-        print "outerhole[outerholeid]=", outerhole[outerholeid], as_polar_string(outerhole[outerholeid])
+        # print "innerhole=", innerhole, as_polar_string(innerhole)
+        # print "outerhole[outerholeid]=", outerhole[outerholeid], as_polar_string(outerhole[outerholeid])
         ih_to_oh = outerhole[outerholeid] - innerhole
-        print "ih_to_oh=", ih_to_oh, as_polar_string(ih_to_oh)
+        # print "ih_to_oh=", ih_to_oh, as_polar_string(ih_to_oh)
         standoff_ih_to_oh_vec[outerholeid] = cmath.rect(border_standoff, cmath.phase(ih_to_oh) + multiplier * 2 * deg45)
-        print "standoff_ih_to_oh_vec[outerholeid]=", standoff_ih_to_oh_vec[outerholeid], as_polar_string(standoff_ih_to_oh_vec[outerholeid])
+        # print "standoff_ih_to_oh_vec[outerholeid]=", standoff_ih_to_oh_vec[outerholeid], as_polar_string(standoff_ih_to_oh_vec[outerholeid])
         
         ih_to_oh_line_start = innerhole + standoff_ih_to_oh_vec[outerholeid]
         ih_to_oh_line_end = outerhole[outerholeid] + standoff_ih_to_oh_vec[outerholeid]
@@ -191,7 +191,29 @@ Po 0 %s %s 150
 De 21 0 900 0 0
 $EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh_line_start), point_to_kicad(ih_to_oh_line_end))
 
+    # Calculate points for segment on boundary between two outer holes
+    # print "outerhole[0]=", outerhole[0], as_polar_string(outerhole[0])
+    # print "outerhole[1]=", outerhole[1], as_polar_string(outerhole[1])
+    oh0_to_oh1 = outerhole[1] - outerhole[0]
+    # print "oh0_to_oh1=", oh0_to_oh1, as_polar_string(oh0_to_oh1)
+
+    standoff_oh0_to_oh1_vec = cmath.rect(border_standoff, cmath.phase(oh0_to_oh1) - 2 * deg45)
+    # print "standoff_oh0_to_oh1_vec=", standoff_oh0_to_oh1_vec, as_polar_string(standoff_oh0_to_oh1_vec)
+    oh0_to_oh1_line_start = outerhole[0] + standoff_oh0_to_oh1_vec
+    oh0_to_oh1_line_end = outerhole[1] + standoff_oh0_to_oh1_vec
+    segments = segments + 1
+    print >>f, \
+"""$DRAWSEGMENT
+Po 0 %s %s 150
+De 21 0 900 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(oh0_to_oh1_line_start), point_to_kicad(oh0_to_oh1_line_end))
+
+    # Draw arc around bottom of inner circle
     inner_arc_angle = 2 * math.pi - (cmath.phase(standoff_ih_to_oh_vec[1]) - cmath.phase(standoff_ih_to_oh_vec[0]))
+    # Normalise to -pi .. pi
+    if inner_arc_angle > math.pi:
+        inner_arc_angle = inner_arc_angle - 2 * math.pi
+
     print "inner_arc_angle=", math.degrees(inner_arc_angle)
     print >>f, \
 """$DRAWSEGMENT
