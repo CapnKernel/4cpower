@@ -298,7 +298,52 @@ ZInfo 4F68396B 2 "N-000009"
 ZLayer 0
 ZAux 4 E"""
     print >>f, zoneparams
- 
+
+def emit_text(f):
+    # TODO: Parameterise text position in terms of A and B.
+    print >>f, \
+"""$TEXTPCB
+Te "Want cheap PCBs?"
+Po 67913 52559 403 721 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "http://hackvana.com/pcb"
+Po 66732 54528 403 721 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "https://github.com/CapnKernel/4cpower/"
+Po 51575 54528 403 721 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "power board v1.0"
+Po 52165 27362 472 787 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "Quadcopter-compatible"
+Po 52953 25984 472 787 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "Check out Good Luck Buy for"
+nl "the best hobby products!"
+Po 68110 25984 403 721 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "http://goodluckbuy.com/index.php?target=products&mode=search&q=76666"
+Po 59843 50394 276 512 69 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
+Te "Open Source Hardware"
+Po 52165 52559 403 721 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB"""
+
 f = open("segment.inc", "w")
 emit_border(f)
 
@@ -311,6 +356,9 @@ for group in range(0, 8):
 
 f = open("zones.inc", "w")
 emit_zones(f)
+
+f = open("text.inc", "w")
+emit_text(f)
 
 f = open("ndraw.inc", "w")
 print >>f, "Ndraw %d" % segments
