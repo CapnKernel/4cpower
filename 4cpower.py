@@ -16,7 +16,7 @@ inner_distance = A * 0.45
 outer_distance = A * 0.80
 
 # How much the whole board should be rotated by
-board_rotation = math.radians(22.5)
+board_rotation = math.radians(0)
 
 # Distance of border away from holes.
 border_standoff = 4
@@ -99,7 +99,7 @@ T1 0 1100 400 400 0 100 N I 21 N ""
 DC 0 0 1000 900 150 21
 $PAD
 Sh "1" C 2350 2350 0 0 0
-Dr 1320 0 0
+Dr 1340 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 0 0
