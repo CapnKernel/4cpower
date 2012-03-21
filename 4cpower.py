@@ -130,16 +130,28 @@ Sc 4F58C9C4
 AR /4F583B52
 Op 0 0 0
 T0 0 0 400 400 0 100 N V 21 N "P%d"
-T1 %s 1000 1000 0 250 N I 21 N "%s",
+T1 %s 1000 1000 0 250 N I 21 N "%s"
 $PAD
-Sh "1" C 2200 2400 0 0 0
+Sh "1" C 2500 2500 0 0 0
 Dr 1000 0 0
 At STD N 00E0FFFF
 Ne %s
 Po 0 0
-$EndPAD
-$EndMODULE  power-hole""" % \
-(point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_offset), sign, net)
+$EndPAD""" % (point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_offset), sign, net)
+
+    for smallholeid in range(0, 9):
+        angle = 2 * math.pi / 9 * smallholeid
+        smallhole = cmath.rect(2.17, angle)
+        print >>f, \
+"""$PAD
+Sh "%d" C 394 394 0 0 900
+Dr 250 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po %s
+$EndPAD""" % (smallholeid + 2, point_to_kicad(smallhole, no_offset))
+
+    print >>f, "$EndMODULE  power-hole"
 
     outerhole = {}
     standoff_ih_to_oh_vec = {}
@@ -172,8 +184,20 @@ Dr 1000 0 0
 At STD N 00E0FFFF
 Ne %s
 Po 0 0
-$EndPAD
-$EndMODULE  power-hole""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
+$EndPAD""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
+        for smallholeid in range(0, 9):
+            angle = 2 * math.pi / 9 * smallholeid
+            smallhole = cmath.rect(2.17, angle)
+            print >>f, \
+"""$PAD
+Sh "%d" C 394 394 0 0 900
+Dr 250 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po %s
+$EndPAD""" % (smallholeid + 2, point_to_kicad(smallhole, no_offset))
+
+        print >>f, "$EndMODULE  power-hole"
 
         # print "innerhole=", innerhole, as_polar_string(innerhole)
         # print "outerhole[outerholeid]=", outerhole[outerholeid], as_polar_string(outerhole[outerholeid])

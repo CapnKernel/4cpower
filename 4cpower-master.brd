@@ -84,4 +84,5 @@ $TRACK
 $EndTRACK
 $ZONE
 $EndZONE
+#include "zones.inc"
 $EndBOARD
