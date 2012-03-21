@@ -15,6 +15,9 @@ no_offset = complex(0, 0)
 inner_distance = A * 0.45
 outer_distance = A * 0.80
 
+# How much the whole board should be rotated by
+board_rotation = math.radians(22.5)
+
 # Distance of border away from holes.
 border_standoff = 4
 
@@ -40,9 +43,9 @@ def as_polar_string(p):
     return "(r=%f,θ=%f°)" % (abs(p), math.degrees(cmath.phase(p)))
 
 def point_to_kicad(p, origin=page_offset):
-
     """ Convert a point in mm to a string in thousandths of an inch """
-    offset_p = p + origin
+    rotated_p = cmath.rect(abs(p), cmath.phase(p) + board_rotation)
+    offset_p = rotated_p + origin
     return "%d %d" % (int((offset_p.real / 25.4) * 10000), -int((offset_p.imag / 25.4) * 10000))
 
 def emit_border(f):
