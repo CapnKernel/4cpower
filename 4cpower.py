@@ -20,6 +20,8 @@ board_rotation = math.radians(0)
 
 # Distance of border away from holes.
 border_standoff = 4
+# Distance between carrier and board
+carrier_standoff = 2
 
 # print "inner_distance=", inner_distance
 # print "outer_distance=", outer_distance
@@ -38,6 +40,7 @@ inner_to_outer_deviation_angle = math.pi - centre_inner_outer_angle
 # assert 1==0
 
 segments = 0
+last_seg = None
 
 def as_polar_string(p):
     return "(r=%f,θ=%f°)" % (abs(p), math.degrees(cmath.phase(p)))
@@ -47,6 +50,22 @@ def point_to_kicad(p, origin=page_offset):
     rotated_p = cmath.rect(abs(p), cmath.phase(p) + board_rotation)
     offset_p = rotated_p + origin
     return "%d %d" % (int((offset_p.real / 25.4) * 10000), -int((offset_p.imag / 25.4) * 10000))
+
+# Emit a segment for the edge of the board
+# Takes two or three arguments.  Args two and
+# three are the coords of the segment.  If there
+# are only two arguments, previous is the next
+# from last time.
+def pcb_edge(f, prev, next=None):
+    global segments, last_seg
+    if next == None:
+        next = prev
+        prev = last_seg
+    # print "p=", p, "prev=", prev, "next=", next
+    # print "p=", p, "prev=", point_to_kicad(prev), "next=", point_to_kicad(next)
+    print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(prev), point_to_kicad(next))
+    segments = segments + 1
+    last_seg = next
 
 def emit_border(f):
     global segments
@@ -60,14 +79,53 @@ def emit_border(f):
     # print "odd_point=", odd_point, "odd_len=", odd_len
     # assert 1 == 0
     for p in xrange(1, 17):
+        # Get the rough points for this segment
         if p % 2 == 0:
             next = cmath.rect(B, p * deg45 / 2)
         else:
             next = cmath.rect(odd_len, p * deg45 / 2)
-        # print "p=", p, "prev=", prev, "next=", next
-        # print "p=", p, "prev=", point_to_kicad(prev), "next=", point_to_kicad(next)
-        print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(prev), point_to_kicad(next))
-        segments = segments + 1
+
+        # Now there's lots of special-casing to do
+        if p == 10:
+            next1 = next + complex(0, -carrier_standoff)
+            pcb_edge(f, next1)
+            next2 = complex(-B, next1.imag)
+            pcb_edge(f, next2)
+            pcb_edge(f, complex(-B, -B))
+        elif p == 11:
+            prev1 = complex(prev.real + carrier_standoff, prev.imag)
+            pcb_edge(f, prev1, next)
+            prev2 = prev1 - complex(0, carrier_standoff)
+            pcb_edge(f, prev1, prev2)
+            diag_carrier_standoff_x_off = math.tan(math.radians(67.5)) / carrier_standoff
+            # print "diag_carrier_standoff_x_off=", diag_carrier_standoff_x_off
+            diag_carrier_standoff = complex(diag_carrier_standoff_x_off, carrier_standoff)
+            # print "diag_carrier_standoff=", diag_carrier_standoff
+            # print "next=", next
+            next1 = next - diag_carrier_standoff
+            # print "next1=", next1
+            pcb_edge (f, next1)
+        elif p == 12:
+            # print "prev=", prev, "next=", next
+            p12_vec = next - prev
+            # print "p12_vec=", p12_vec, as_polar_string(p12_vec)
+            p12_vec_60 = p12_vec * 0.6
+            # print "p12_vec_60=", p12_vec_60, as_polar_string(p12_vec_60)
+            p12_vec_70 = p12_vec * 0.7
+            # print "p12_vec_70=", p12_vec_70, as_polar_string(p12_vec_70)
+            pcb_edge(f, prev, prev + p12_vec_60)
+            diag_carrier_standoff = cmath.rect(carrier_standoff, 5 * deg45)
+            # print "diag_carrier_standoff=", diag_carrier_standoff
+            pcb_edge(f, prev + p12_vec_60 + diag_carrier_standoff)
+            pcb_edge(f, next1)
+            pcb_edge(f, next, prev + p12_vec_70)
+            pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff);
+            diag_carrier_offset = next - (cmath.rect(carrier_standoff, deg45) + cmath.rect(carrier_standoff, -deg45))
+            pcb_edge(f, complex(-B, -B), diag_carrier_offset)
+            pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff);
+
+        else:
+            pcb_edge(f, prev, next)
     
         prev = next
 
