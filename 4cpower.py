@@ -9,6 +9,7 @@ B = math.sqrt(2*A*A)
 
 deg45 = math.pi / 4
 
+groups = 8
 page_offset = complex(6 * 25.4, -4 * 25.4)
 no_offset = complex(0, 0)
 
@@ -41,6 +42,7 @@ inner_to_outer_deviation_angle = math.pi - centre_inner_outer_angle
 
 segments = 0
 last_seg = None
+group_text_pos = {}
 
 def as_polar_string(p):
     return "(r=%f,θ=%f°)" % (abs(p), math.degrees(cmath.phase(p)))
@@ -215,6 +217,11 @@ Ne %s
 Po 0 0
 $EndPAD""" % (point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_offset), sign, net)
 
+    # Save the symbol position for later.
+    group_text_pos[group] = {}
+    group_text_pos[group]['text'] = sign
+    group_text_pos[group]['position'] = symbol
+
     for smallholeid in range(0, 9):
         angle = 2 * math.pi / 9 * smallholeid
         smallhole = cmath.rect(2.17, angle)
@@ -374,7 +381,16 @@ ZAux 4 E"""
     print >>f, zoneparams
 
 def emit_text(f):
+    for group in range(0, groups):
+        print >>f, \
+"""$TEXTPCB
+Te "%s"
+Po %s 1000 1200 200 0
+De 21 1 0 Normal C
+$EndTEXTPCB""" % (group_text_pos[group]['text'], point_to_kicad(group_text_pos[group]['position']))
+
     # TODO: Parameterise text position in terms of A and B.
+
     print >>f, \
 """$TEXTPCB
 Te "Want cheap PCBs?"
@@ -433,7 +449,7 @@ f = open("mounting-holes.inc", "w")
 emit_mounting_holes(f)
 
 f = open("power-holes.inc", "w")
-for group in range(0, 8):
+for group in range(0, groups):
     emit_group(f, group)
 
 f = open("zones.inc", "w")
