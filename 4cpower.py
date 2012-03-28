@@ -378,12 +378,12 @@ def emit_text(f):
     print >>f, \
 """$TEXTPCB
 Te "Want cheap PCBs?"
-Po 67913 52559 403 721 101 0
+Po 68307 52559 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
-Te "http://hackvana.com/pcb"
-Po 66732 54528 403 721 101 0
+Te "http://hackvana.com/pcbs"
+Po 68504 54528 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
@@ -393,18 +393,24 @@ De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
 Te "power board v1.0"
-Po 52165 27362 472 787 101 0
+Po 52362 27165 472 787 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
-Te "Quadcopter-compatible"
-Po 52953 25984 472 787 101 0
+Te "n"
+Po 49213 25590 472 787 101 0
+De 21 1 0 Italic L
+$EndTEXTPCB
+$TEXTPCB
+Te "copter-compatible"
+Po 53150 25590 472 787 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
 Te "Check out Good Luck Buy for"
 nl "the best hobby products!"
-Po 68110 25984 403 721 101 0
+nl "http://goodluckbuy.com/"
+Po 69094 25394 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
