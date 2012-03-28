@@ -56,15 +56,17 @@ def point_to_kicad(p, origin=page_offset):
 # three are the coords of the segment.  If there
 # are only two arguments, previous is the next
 # from last time.
+# Note this has a strange side effect: It mirrors
+# to all four quadrants of the board.
 def pcb_edge(f, prev, next=None):
     global segments, last_seg
     if next == None:
         next = prev
         prev = last_seg
-    # print "p=", p, "prev=", prev, "next=", next
-    # print "p=", p, "prev=", point_to_kicad(prev), "next=", point_to_kicad(next)
-    print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(prev), point_to_kicad(next))
-    segments = segments + 1
+    for ymult in [-1, 1]:
+        for xmult in [-1, 1]:
+            print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(complex(prev.real * xmult, prev.imag * ymult)), point_to_kicad(complex(next.real * xmult, next.imag * ymult)))
+            segments = segments + 1
     last_seg = next
 
 def emit_border(f):
@@ -86,9 +88,11 @@ def emit_border(f):
             next = cmath.rect(odd_len, p * deg45 / 2)
 
         # Now there's lots of special-casing to do
+        if p == 9:
+            pcb_edge(f, prev, next)
         if p == 10:
             next1 = next + complex(0, -carrier_standoff)
-            pcb_edge(f, next1)
+            pcb_edge(f, prev, next1)
             next2 = complex(-B, next1.imag)
             pcb_edge(f, next2)
             pcb_edge(f, complex(-B, -B))
@@ -125,7 +129,9 @@ def emit_border(f):
             pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff);
 
         else:
-            pcb_edge(f, prev, next)
+            # pcb_edge(f, prev, next)
+            # silly = []
+            pass
     
         prev = next
 
@@ -138,6 +144,15 @@ def emit_border(f):
 Po 3 %s %s 150w
 De 28 0 900 0 0
 $EndDRAWSEGMENT""" % (point_to_kicad(middle), point_to_kicad(threeoclock))
+
+def emit_simple_border(f):
+    global segments
+    borders = [[B, B], [B, -B], [-B, -B], [-B, B], [B, B]]
+    # print borders
+    for border in range(0, len(borders) - 1):
+        print borders[border], borders[border + 1]
+        print >>f, "$DRAWSEGMENT\nPo 0 %s %s 150\nDe 28 0 900 0 0\n$EndDRAWSEGMENT" % (point_to_kicad(complex(borders[border][0], borders[border][1])), point_to_kicad(complex(borders[border + 1][0], borders[border + 1][1])))
+        segments = segments + 1
 
 def emit_mounting_holes(f):
     for p in xrange(0, 8):
@@ -208,9 +223,9 @@ $EndPAD""" % (point_to_kicad(innerhole), part, point_to_kicad(symboldiff, no_off
 Sh "%d" C 394 394 0 0 900
 Dr 250 0 0
 At STD N 00E0FFFF
-Ne 0 ""
+Ne %s
 Po %s
-$EndPAD""" % (smallholeid + 2, point_to_kicad(smallhole, no_offset))
+$EndPAD""" % (1, net, point_to_kicad(smallhole, no_offset))
 
     print >>f, "$EndMODULE  power-hole"
 
@@ -254,9 +269,9 @@ $EndPAD""" % (point_to_kicad(outerhole[outerholeid]), outerpart, net)
 Sh "%d" C 394 394 0 0 900
 Dr 250 0 0
 At STD N 00E0FFFF
-Ne 0 ""
+Ne %s
 Po %s
-$EndPAD""" % (smallholeid + 2, point_to_kicad(smallhole, no_offset))
+$EndPAD""" % (1, net, point_to_kicad(smallhole, no_offset))
 
         print >>f, "$EndMODULE  power-hole"
 
@@ -327,13 +342,14 @@ $EndDRAWSEGMENT""" % (point_to_kicad(outerhole[0]), point_to_kicad(oh0_to_oh1_li
     segments = segments + 1
 
 def emit_zones(f):
-    TL = complex(-B, B)
-    TR = complex(B, B)
-    BL = complex(-B, -B)
-    BR = complex(B, -B)
+    zonemult = 0.99
+    TL = complex(-B * zonemult, B * zonemult)
+    TR = complex(B * zonemult, B * zonemult)
+    BL = complex(-B * zonemult, -B * zonemult)
+    BR = complex(B * zonemult, -B * zonemult)
 
     zoneparams = \
-"""ZClearance 200 T
+"""ZClearance 200 I
 ZMinThickness 100
 ZOptions 0 16 F 200 200
 ZSmoothing 0 0
@@ -402,8 +418,10 @@ Po 52165 52559 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB"""
 
+## MAIN
 f = open("segment.inc", "w")
 emit_border(f)
+# emit_simple_border(f)
 
 f = open("mounting-holes.inc", "w")
 emit_mounting_holes(f)
