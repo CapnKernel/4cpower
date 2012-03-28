@@ -382,12 +382,13 @@ ZAux 4 E"""
 
 def emit_text(f):
     for group in range(0, groups):
-        print >>f, \
+        for layer in (20, 21):
+            print >>f, \
 """$TEXTPCB
 Te "%s"
 Po %s 1000 1200 200 0
-De 21 1 0 Normal C
-$EndTEXTPCB""" % (group_text_pos[group]['text'], point_to_kicad(group_text_pos[group]['position']))
+De %d 1 0 Normal C
+$EndTEXTPCB""" % (group_text_pos[group]['text'], point_to_kicad(group_text_pos[group]['position']), layer)
 
     # TODO: Parameterise text position in terms of A and B.
 
