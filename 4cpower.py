@@ -403,6 +403,11 @@ Po 68504 54528 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
+Te "CC-BY-SA 3.0"
+Po 53937 53543 403 721 101 0
+De 21 1 0 Normal C
+$EndTEXTPCB
+$TEXTPCB
 Te "https://github.com/CapnKernel/4cpower/"
 Po 51575 54528 403 721 101 0
 De 21 1 0 Normal C
