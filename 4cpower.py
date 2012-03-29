@@ -79,13 +79,13 @@ def emit_snapoff(snapgap_lh, snapgap_rh):
     snapgap_step = snapgap_diff / snapgap_holes
     # snapgap_half = snapgap_diff / 2
     # snapgap_mid = snapgap_lh + snapgap_half
-    print "snapgap=", snapgap_lh, snapgap_rh, snapgap_diff, snapgap_holes, snapgap_step
+    # print "snapgap=", snapgap_lh, snapgap_rh, snapgap_diff, snapgap_holes, snapgap_step
     #snapgap_half, snapgap_mid
     snapgap_cursor = snapgap_lh
     while True:
         snapgap_cursor = snapgap_cursor + snapgap_step
         error_term = abs(snapgap_cursor - snapgap_rh)
-        print "snapgap_cursor=", snapgap_cursor, "error_term=", error_term
+        # print "snapgap_cursor=", snapgap_cursor, "error_term=", error_term
         if error_term < snapoff_dist / 2:
             break
         for ymult in [-1, 1]:
@@ -166,10 +166,11 @@ def emit_border(f):
             pcb_edge(f, prev + p12_vec_60 + diag_carrier_standoff)
             pcb_edge(f, next1)
             pcb_edge(f, next, prev + p12_vec_70)
-            pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff);
+            pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff)
             diag_carrier_offset = next - (cmath.rect(carrier_standoff, deg45) + cmath.rect(carrier_standoff, -deg45))
             pcb_edge(f, complex(-B, -B), diag_carrier_offset)
-            pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff);
+            pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff)
+            emit_snapoff(prev + p12_vec_60, prev + p12_vec_70)
         else:
             # pcb_edge(f, prev, next)
             # silly = []
