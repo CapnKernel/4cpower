@@ -23,6 +23,8 @@ board_rotation = math.radians(0)
 border_standoff = 4
 # Distance between carrier and board
 carrier_standoff = 2
+# Distance between snap-off drill holes
+snapoff_dist = 0.5
 
 # print "inner_distance=", inner_distance
 # print "outer_distance=", outer_distance
@@ -71,6 +73,39 @@ def pcb_edge(f, prev, next=None):
             segments = segments + 1
     last_seg = next
 
+def emit_snapoff(snapgap_lh, snapgap_rh):
+    snapgap_diff = snapgap_rh - snapgap_lh
+    snapgap_holes = (abs(snapgap_diff) / snapoff_dist)
+    snapgap_step = snapgap_diff / snapgap_holes
+    # snapgap_half = snapgap_diff / 2
+    # snapgap_mid = snapgap_lh + snapgap_half
+    print "snapgap=", snapgap_lh, snapgap_rh, snapgap_diff, snapgap_holes, snapgap_step
+    #snapgap_half, snapgap_mid
+    snapgap_cursor = snapgap_lh
+    while True:
+        snapgap_cursor = snapgap_cursor + snapgap_step
+        error_term = abs(snapgap_cursor - snapgap_rh)
+        print "snapgap_cursor=", snapgap_cursor, "error_term=", error_term
+        if error_term < snapoff_dist / 2:
+            break
+        print >>f, \
+"""$MODULE snap-hole
+Po %s 0 15 4F73C4C3 4F73C4A4 ~~
+Li snap-hole
+Cd Snap hole
+Kw DEV
+Sc 4F73C4A4
+AR /4F583B52
+Op 0 0 0
+$PAD
+Sh "" C 157 157 0 0 900
+Dr 157 0 0
+At HOLE N 00E0FFFF
+Ne 0 ""
+Po 0 0
+$EndPAD
+$EndMODULE  snap-hole""" % (point_to_kicad(snapgap_cursor))
+
 def emit_border(f):
     global segments
 
@@ -98,6 +133,9 @@ def emit_border(f):
             next2 = complex(-B, next1.imag)
             pcb_edge(f, next2)
             pcb_edge(f, complex(-B, -B))
+            # Snap-off drill holes
+            # next is the left-hand edge of the snap gap
+            # emit_snapoff(next, next + complex(carrier_standoff, 0))
         elif p == 11:
             prev1 = complex(prev.real + carrier_standoff, prev.imag)
             pcb_edge(f, prev1, next)
@@ -129,7 +167,6 @@ def emit_border(f):
             diag_carrier_offset = next - (cmath.rect(carrier_standoff, deg45) + cmath.rect(carrier_standoff, -deg45))
             pcb_edge(f, complex(-B, -B), diag_carrier_offset)
             pcb_edge(f, prev + p12_vec_70 + diag_carrier_standoff);
-
         else:
             # pcb_edge(f, prev, next)
             # silly = []
