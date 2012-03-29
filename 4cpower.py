@@ -88,7 +88,9 @@ def emit_snapoff(snapgap_lh, snapgap_rh):
         print "snapgap_cursor=", snapgap_cursor, "error_term=", error_term
         if error_term < snapoff_dist / 2:
             break
-        print >>f, \
+        for ymult in [-1, 1]:
+            for xmult in [-1, 1]:
+                print >>f, \
 """$MODULE snap-hole
 Po %s 0 15 4F73C4C3 4F73C4A4 ~~
 Li snap-hole
@@ -97,6 +99,7 @@ Kw DEV
 Sc 4F73C4A4
 AR /4F583B52
 Op 0 0 0
+.LocalClearance 10
 $PAD
 Sh "" C 157 157 0 0 900
 Dr 157 0 0
@@ -104,7 +107,7 @@ At HOLE N 00E0FFFF
 Ne 0 ""
 Po 0 0
 $EndPAD
-$EndMODULE  snap-hole""" % (point_to_kicad(snapgap_cursor))
+$EndMODULE  snap-hole""" % (point_to_kicad(complex(snapgap_cursor.real * xmult, snapgap_cursor.imag * ymult)))
 
 def emit_border(f):
     global segments
@@ -135,7 +138,7 @@ def emit_border(f):
             pcb_edge(f, complex(-B, -B))
             # Snap-off drill holes
             # next is the left-hand edge of the snap gap
-            # emit_snapoff(next, next + complex(carrier_standoff, 0))
+            emit_snapoff(next, next + complex(carrier_standoff, 0))
         elif p == 11:
             prev1 = complex(prev.real + carrier_standoff, prev.imag)
             pcb_edge(f, prev1, next)
