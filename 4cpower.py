@@ -331,12 +331,13 @@ $EndPAD""" % (1, net, point_to_kicad(smallhole, no_offset))
         
         ih_to_oh_line_start = innerhole + standoff_ih_to_oh_vec[outerholeid]
         ih_to_oh_line_end = outerhole[outerholeid] + standoff_ih_to_oh_vec[outerholeid]
-        segments = segments + 1
-        print >>f, \
+        for layer in (20, 21):
+            segments = segments + 1
+            print >>f, \
 """$DRAWSEGMENT
 Po 0 %s %s 150
-De 21 0 900 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh_line_start), point_to_kicad(ih_to_oh_line_end))
+De %d 0 900 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh_line_start), point_to_kicad(ih_to_oh_line_end), layer)
 
     # Calculate points for segment on boundary between two outer holes
     # print "outerhole[0]=", outerhole[0], as_polar_string(outerhole[0])
@@ -348,12 +349,13 @@ $EndDRAWSEGMENT""" % (point_to_kicad(ih_to_oh_line_start), point_to_kicad(ih_to_
     # print "standoff_oh0_to_oh1_vec=", standoff_oh0_to_oh1_vec, as_polar_string(standoff_oh0_to_oh1_vec)
     oh0_to_oh1_line_start = outerhole[0] + standoff_oh0_to_oh1_vec
     oh0_to_oh1_line_end = outerhole[1] + standoff_oh0_to_oh1_vec
-    segments = segments + 1
-    print >>f, \
+    for layer in (20, 21):
+        segments = segments + 1
+        print >>f, \
 """$DRAWSEGMENT
 Po 0 %s %s 150
-De 21 0 900 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(oh0_to_oh1_line_start), point_to_kicad(oh0_to_oh1_line_end))
+De %d 0 900 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(oh0_to_oh1_line_start), point_to_kicad(oh0_to_oh1_line_end), layer)
 
     # Draw arc around bottom of inner circle
     inner_arc_angle = 2 * math.pi - (cmath.phase(standoff_ih_to_oh_vec[1]) - cmath.phase(standoff_ih_to_oh_vec[0]))
@@ -362,31 +364,33 @@ $EndDRAWSEGMENT""" % (point_to_kicad(oh0_to_oh1_line_start), point_to_kicad(oh0_
         inner_arc_angle = inner_arc_angle - 2 * math.pi
 
     # print "inner_arc_angle=", math.degrees(inner_arc_angle)
-    print >>f, \
+    for layer in (20, 21):
+        print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
-De 21 0 %d 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(ih_to_oh_line_start), -int(math.degrees(inner_arc_angle) * 10))
-    segments = segments + 1
+De %d 0 %d 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(innerhole), point_to_kicad(ih_to_oh_line_start), layer, -int(math.degrees(inner_arc_angle) * 10))
+        segments = segments + 1
 
     # Easy to calculate the angles of the other two arcs, as they are identical, and
     # will use the angle not used by the inner arc.
     outer_arc_angle = (2 * math.pi - inner_arc_angle) / 2
     # print "outer_arc_angle=", math.degrees(outer_arc_angle)
 
-    print >>f, \
+    for layer in (20, 21):
+        print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
-De 21 0 %d 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(outerhole[1]), point_to_kicad(ih_to_oh_line_end), int(math.degrees(outer_arc_angle) * 10))
-    segments = segments + 1
+De %d 0 %d 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(outerhole[1]), point_to_kicad(ih_to_oh_line_end), layer, int(math.degrees(outer_arc_angle) * 10))
+        segments = segments + 1
 
-    print >>f, \
+        print >>f, \
 """$DRAWSEGMENT
 Po 2 %s %s 150
-De 21 0 %d 0 0
-$EndDRAWSEGMENT""" % (point_to_kicad(outerhole[0]), point_to_kicad(oh0_to_oh1_line_start), int(math.degrees(outer_arc_angle) * 10))
-    segments = segments + 1
+De %d 0 %d 0 0
+$EndDRAWSEGMENT""" % (point_to_kicad(outerhole[0]), point_to_kicad(oh0_to_oh1_line_start), layer, int(math.degrees(outer_arc_angle) * 10))
+        segments = segments + 1
 
 def emit_zones(f):
     zonemult = 0.99
@@ -482,7 +486,7 @@ De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
 Te "Open Source Hardware"
-Po 52165 52559 403 721 101 0
+Po 51772 52362 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB"""
 
