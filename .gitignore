@@ -1,0 +1,12 @@
+$4cpower.brd
+*.000
+*-cache.lib
+*.bak
+logo.inc
+power-holes.inc
+mounting-holes.inc
+text.inc
+zones.inc
+segment.inc
+ndraw.inc
+gerbers
