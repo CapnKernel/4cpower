@@ -1,8 +1,9 @@
-PCBNEW-LibModule-V1  Tue 20 Mar 2012 23:41:30 HKT
+PCBNEW-LibModule-V1  Thu 29 Mar 2012 13:11:19 EST
 # encoding utf-8
 $INDEX
 mounting-hole
 power-hole
+snap-hole
 $EndINDEX
 $MODULE power-hole
 Po 0 0 0 15 4F68A50F 00000000 ~~
@@ -104,4 +105,22 @@ Ne 0 ""
 Po 0 0
 $EndPAD
 $EndMODULE  mounting-hole
+$MODULE snap-hole
+Po 0 0 0 15 4F73C4C3 00000000 ~~
+Li snap-hole
+Cd Snap hole
+Kw DEV
+Sc 00000000
+AR /4F583B52
+Op 0 0 0
+T0 0 -500 400 400 0 100 N V 21 N "H**"
+T1 0 1100 1000 1000 0 250 N I 21 N "?"
+$PAD
+Sh "" C 157 157 0 0 900
+Dr 157 0 0
+At HOLE N 00E0FFFF
+Ne 0 ""
+Po 0 0
+$EndPAD
+$EndMODULE  snap-hole
 $EndLIBRARY
