@@ -1,4 +1,4 @@
-update=Mon 12 Mar 2012 18:45:06 HKT
+update=Thu 29 Mar 2012 19:28:12 EST
 version=1
 last_client=pcbnew
 [eeschema]
@@ -90,3 +90,4 @@ LastNetListRead=
 [pcbnew/libraries]
 LibDir=
 LibName1=4cpower
+LibName2=oshwlogo
