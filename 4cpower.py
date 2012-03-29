@@ -158,7 +158,10 @@ def emit_border(f):
             # print "p12_vec=", p12_vec, as_polar_string(p12_vec)
             p12_vec_60 = p12_vec * 0.6
             # print "p12_vec_60=", p12_vec_60, as_polar_string(p12_vec_60)
-            p12_vec_70 = p12_vec * 0.7
+            # We used to have the gap between 60% and 70%.  Now we have 60%
+            # plus the standoff gap.
+            diag_carrier_standoff = cmath.rect(carrier_standoff, -deg45)
+            p12_vec_70 = p12_vec_60 + diag_carrier_standoff
             # print "p12_vec_70=", p12_vec_70, as_polar_string(p12_vec_70)
             pcb_edge(f, prev, prev + p12_vec_60)
             diag_carrier_standoff = cmath.rect(carrier_standoff, 5 * deg45)
