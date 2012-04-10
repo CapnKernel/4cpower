@@ -30,7 +30,7 @@ and Shenzhen China.  I make affordable PCBs for hobbyists:
 You are welcome to ask me to make this board for you, to make it yourself,
 or to buy it from a reputable supplier, such as Good Luck Buy:
 
-  http://goodluckbuy.com/index.php?target=products&mode=search&q=76666
+  http://goodluckbuy.com/index.php?target=products&mode=search&q=80949
 
 This board contains a lot of symmetry, and it would be infeasible to
 place all the parts and holes by hand.  So instead, a small Python script

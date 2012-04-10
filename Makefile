@@ -1,5 +1,6 @@
 TARGET:=4cpower.brd
-INCLUDES:=nets.inc power-holes.inc mounting-holes.inc segment.inc ndraw.inc
+INCLUDES:=power-holes.inc mounting-holes.inc segment.inc ndraw.inc zones.inc text.inc logo.inc
+RUBBISH=$$4cpower.brd *.000 *-cache.lib *.bak
 
 all: $(TARGET)
 
@@ -13,4 +14,5 @@ $(INCLUDES): 4cpower.py
 
 .PHONY: clean
 clean:
-	-rm -f $(TARGET)
+	-rm -f $(TARGET) $(INCLUDES)
+	-rm -f $(RUBBISH)

@@ -628,7 +628,7 @@ Po 69094 25394 403 721 101 0
 De 21 1 0 Normal C
 $EndTEXTPCB
 $TEXTPCB
-Te "http://goodluckbuy.com/index.php?target=products&mode=search&q=76666"
+Te "http://goodluckbuy.com/index.php?target=products&mode=search&q=80949"
 Po 59843 50394 276 512 69 0
 De 21 1 0 Normal C
 $EndTEXTPCB
