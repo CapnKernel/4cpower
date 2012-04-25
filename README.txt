@@ -20,7 +20,8 @@ ShareAlike 3.0 Unported License":
 
 You are welcome to share and alter the board design, to sell and
 use it for commercial purposes, and to contribute suggestions and
-improvements back to me.
+improvements back to me.  You must leave the lower left hand corner
+(with my name on it) as it is.
 
 My name is Mitch Davis <mjd@afork.com>.  I live in Melbourne Australia
 and Shenzhen China.  I make affordable PCBs for hobbyists:
